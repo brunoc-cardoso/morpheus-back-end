@@ -15,7 +15,7 @@ module.exports = {
     return res.status(201).json(product);
   },
 
-  async delete(req, res) {
+  async destroy(req, res) {
     const { id } = req.params;
 
     await Product.destroy({
@@ -23,5 +23,14 @@ module.exports = {
     })
 
     return res.status(200).json({ message: 'Product deleted successfully' })
+  },
+
+  async update(req, res) {
+    const { id } = req.params;
+    const updates = req.body;
+    
+    const product = await Product.update(updates, { where: { id } });
+
+    return res.status(200).json({ message: 'Product updated successfully' });
   }
 }
