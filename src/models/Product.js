@@ -9,9 +9,9 @@ class Product extends Model {
       saleValue: DataTypes.DOUBLE,
       isBonus: DataTypes.BOOLEAN,
       isActive: DataTypes.BOOLEAN,
-      minimunStock: DataTypes.INTEGER,
+      minimumStock: DataTypes.INTEGER,
       quantityStock: DataTypes.INTEGER,
-      isNotiable: DataTypes.BOOLEAN
+      isNotifiable: DataTypes.BOOLEAN
     }, {
       sequelize
     });
