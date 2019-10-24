@@ -12,6 +12,16 @@ module.exports = {
 
     const product = await Product.create({ name, description, buyValue, saleValue, isBonus, quantityStock });
 
-    return res.status(200).json(product);
+    return res.status(201).json(product);
+  },
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    await Product.destroy({
+      where: { id }
+    })
+
+    return res.status(200).json({ message: 'Product deleted successfully' })
   }
 }
