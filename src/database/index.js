@@ -11,4 +11,6 @@ const Group = require('../models/Group');
 Product.init(connection);
 Group.init(connection);
 
+Product.associate(connection.models);
+
 module.exports = connection;

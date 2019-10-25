@@ -16,6 +16,10 @@ class Product extends Model {
       sequelize
     });
   }
+
+  static associate(models) {
+    this.belongsTo(models.Group, { foreignKey: 'group_id', as: 'prduct_group' });
+  }
 }
 
 module.exports = Product;

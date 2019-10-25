@@ -8,15 +8,21 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { name, description, buyValue, saleValue, isBonus, quantityStock } = req.body;
+    const { name, description, buyValue, saleValue, isBonus, quantityStock, group_id } = req.body;
 
-    const product = await Product.create({ name, description, buyValue, saleValue, isBonus, quantityStock });
+    const product = await Product.create({ name, description, buyValue, saleValue, isBonus, quantityStock, group_id });
 
     return res.status(201).json(product);
   },
 
   async destroy(req, res) {
     const { id } = req.params;
+
+    const product = await Product.findByPk(id);
+
+    if (!product) {
+      return res.status(400).json({ message: 'Unregistered product' });
+    }
 
     await Product.destroy({
       where: { id }
@@ -28,6 +34,12 @@ module.exports = {
   async update(req, res) {
     const { id } = req.params;
     const updates = req.body;
+
+    const product = await Product.findByPk(id);
+
+    if (!product) {
+      return res.status(400).json({ message: 'Unregistered product' });
+    }
     
     await Product.update(updates, { where: { id } });
 
