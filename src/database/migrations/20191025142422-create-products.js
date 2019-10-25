@@ -48,6 +48,16 @@ module.exports = {
         allowNull: false,
         defaultValue: true // By default every item will have low inventory notification as true
       },
+      group_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { 
+          model: 'groups', 
+          key: 'id' 
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false
