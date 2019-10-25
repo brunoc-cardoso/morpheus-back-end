@@ -29,7 +29,7 @@ module.exports = {
     const { id } = req.params;
     const updates = req.body;
     
-    const product = await Product.update(updates, { where: { id } });
+    await Product.update(updates, { where: { id } });
 
     return res.status(200).json({ message: 'Product updated successfully' });
   }
