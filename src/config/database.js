@@ -3,7 +3,7 @@ module.exports = {
   host: 'localhost',
   username: 'root',
   password: 'root',
-  database: 'sqlnode',
+  database: 'morpheus',
   define: {
     timestamp: true,
     underscored: true

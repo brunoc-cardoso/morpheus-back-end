@@ -12,7 +12,7 @@ module.exports = {
 
     const group = await Group.create({ name, description });
 
-    return res.status(201).json({ message: 'Group successfully registered' });
+    return res.status(201).json({ message: 'Group successfully registered', group });
   },
 
   async destroy(req, res) {
