@@ -1,12 +1,8 @@
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
-const express = require('express');
-const router = express.Router();
-const authMiddleware = require('../middlewares/auth');
-
-router.use(authMiddleware);
 
 function generateToken(params = {}) {
   return jwt.sign(params, authConfig.secret, {
@@ -14,26 +10,47 @@ function generateToken(params = {}) {
   });
 }
 
-router.post('/authenticate', async (req, res) => {
-  const { username, password } = req.body;
+module.exports = {
+  async register(req, res) {
+    const { name, username, email, password, birth, profile_id } = req.body;
 
-  const user = await User.findOne({
-    where: { username },
-  });
+    const hashPasword = await bcrypt.hash(password, 10);
 
-  if (!user)
-    return res.status(400).send({ error: 'User not found '});
+    if (!await Profile.findByPk(profile_id))
+      return res.status(400).json({ message: 'Invalid profile entered, registration not completed.' })
 
-  if (!await bcrypt.compareSync(password, user.password))
-    return res.status(400).send({ error: 'Invalid password' });
+    const user = await User.create({ name, username, email, password: hashPasword, birth, profile_id });
 
-  user.password = undefined;
+    user.password = undefined;
 
-  return res.send({
-    user,
-    token: generateToken({ id: user.id }),
-  });
+    return res.json({
+      user,
+      token: generateToken({ id: user.id })
+    });
+  },
 
-});
+  async authenticate(req, res) {
+    const { username, password } = req.body;
+  
+    const user = await User.findOne({
+      where: { username },
+    });
+  
+    if (!user)
+      return res.status(400).send({ error: 'User not found '});
+  
+    if (!await bcrypt.compareSync(password, user.password))
+      return res.status(400).send({ error: 'Invalid password' });
+  
+    user.password = undefined;
+  
+    return res.send({
+      user,
+      token: generateToken({ id: user.id }),
+    });
+  },
 
-module.exports = app => app.use('/users/authentication', router);
+  async resetPassword(req, res) {
+    // TODO Reset Password process
+  }
+}
