@@ -17,6 +17,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      code: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       buy_value: {
         type: Sequelize.DOUBLE,
         allowNull: false
@@ -27,7 +31,8 @@ module.exports = {
       },
       is_bonus: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: false,
       },
       is_active: {
         type: Sequelize.BOOLEAN,
