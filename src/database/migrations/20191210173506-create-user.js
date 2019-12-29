@@ -37,10 +37,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      acess_token: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       birth: {
         type: Sequelize.DATE,
         allowNull: false
@@ -52,13 +48,13 @@ module.exports = {
       },
       profile_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'profiles',
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       created_At: {
         type: Sequelize.DATE,

@@ -32,15 +32,15 @@ routes.put('/users/profiles/:id',auth.isAuthorized, ProfileController.update);
 routes.delete('/users/profiles/:id',auth.isAuthorized, ProfileController.destroy);
 
 // User
-routes.get('/users', UserController.index);
-// routes.post('/users', UserController.store);
-// routes.delete('/users', UserController.update);
-// routes.put('/users', UserController.destroy);
+routes.get('/users', auth.isAuthorized, UserController.index);
+// routes.post('/users',auth.isAuthorized, UserController.store);
+// routes.delete('/users',auth.isAuthorized, UserController.update);
+// routes.put('/users',auth.isAuthorized, UserController.destroy);
 
 // User Auth
 routes.post('/users/authentication/regiter', AuthController.register); // no need to check token
 routes.post('/users/authentication/login', AuthController.authenticate); // no need to check token
-routes.post('/users/authentication/resetpassword', AuthController.resetPassword); // no need to check token
+routes.post('/users/authentication/resetpassword', AuthController.resetPassword); // TODO no need to check token
 
 
 module.exports = routes;
